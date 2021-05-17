@@ -1,0 +1,22 @@
+spring:
+  flyway.baselineOnMigrate: true
+  h2.console:
+    enabled: true
+    path: '/console'
+  datasource:
+    url: 'jdbc:h2:file:./data/fileDB'
+    driverClassName: 'org.h2.Driver'
+    username: ''
+    password: ''
+  jpa:
+    show-sql: true
+    hibernate.ddl-auto: validate
+    database-platform: org.hibernate.dialect.H2Dialect
+task.tepmlate.allowMultipleTasksFromTemplate: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+
+

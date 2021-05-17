@@ -1,0 +1,1 @@
+INSERT INTO tasks(description, done) VALUES ('Validate model', 1);
