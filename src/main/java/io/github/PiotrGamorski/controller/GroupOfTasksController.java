@@ -1,8 +1,8 @@
 package io.github.PiotrGamorski.controller;
 
 import io.github.PiotrGamorski.logic.GroupOfTasksService;
-import io.github.PiotrGamorski.model.GroupOfTasksRepository;
 import io.github.PiotrGamorski.model.Task;
+import io.github.PiotrGamorski.model.TaskRepository;
 import io.github.PiotrGamorski.model.projection.GroupOfTasksReadModel;
 import io.github.PiotrGamorski.model.projection.GroupOfTasksWriteModel;
 import org.slf4j.Logger;
@@ -17,15 +17,15 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tasks")
+@RequestMapping("/groups")
 class GroupOfTasksController {
     private static final Logger logger = LoggerFactory.getLogger(GroupOfTasksController.class);
-    private final GroupOfTasksRepository groupOfTasksRepository;
+    private final TaskRepository taskRepository;
     private final GroupOfTasksService groupOfTasksService;
 
     @Autowired
-    GroupOfTasksController(final GroupOfTasksRepository groupOfTasksRepository, final GroupOfTasksService groupOfTasksService){
-        this.groupOfTasksRepository = groupOfTasksRepository;
+    GroupOfTasksController(final TaskRepository taskRepository, final GroupOfTasksService groupOfTasksService){
+        this.taskRepository = taskRepository;
         this.groupOfTasksService = groupOfTasksService;
     }
 
@@ -33,7 +33,7 @@ class GroupOfTasksController {
     @PostMapping
     ResponseEntity<GroupOfTasksReadModel> createGroup(@RequestBody @Valid GroupOfTasksWriteModel toCreate){
         var result = groupOfTasksService.createGroup(toCreate);
-        return ResponseEntity.created(URI.create("/")).body(result);
+        return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
     }
 
     @GetMapping
@@ -45,7 +45,7 @@ class GroupOfTasksController {
     @GetMapping("/{id}")
     ResponseEntity<List<Task>> readAllTasksFromGroup(@PathVariable int id){
         logger.warn("Exposing all the tasks");
-        return null;
+        return ResponseEntity.ok(taskRepository.findAllByGroup_Id(id));
     }
 
     @Transactional
@@ -53,5 +53,15 @@ class GroupOfTasksController {
     public ResponseEntity<?> toggleGroup(@PathVariable int id){
         groupOfTasksService.toggleDonePropInGroup(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e){
+        return ResponseEntity.notFound().build();
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    ResponseEntity<String> handleIllegalStateException(IllegalStateException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }

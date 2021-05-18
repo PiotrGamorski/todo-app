@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -22,6 +23,7 @@ class  TaskController {
     private static final Logger logger = LoggerFactory.getLogger(TaskController.class);
     private final TaskRepository repository;
     private final TaskService taskService;
+    private final LocalDate today = LocalDate.now();
 
     @Autowired
     TaskController(final TaskRepository repository, final TaskService taskService){
@@ -58,6 +60,13 @@ class  TaskController {
     @GetMapping("/search/done")
     ResponseEntity<List<Task>> readAllDoneTasks(@RequestParam(defaultValue = "true") boolean state){
         return ResponseEntity.ok(repository.findByDone(state));
+    }
+
+    @GetMapping("/search/deadline")
+    ResponseEntity<List<Task>> readAllUndoneTasksByDeadline(){
+        var today = LocalDate.now();
+        System.out.println(today);
+        return ResponseEntity.ok(repository.findAllUndoneByDeadline(today));
     }
 
     @Transactional

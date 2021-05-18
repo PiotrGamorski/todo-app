@@ -8,11 +8,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class GroupOfTasksReadModel {
+    private int id;
     private String description;
     private LocalDateTime deadline;
     private Set<TaskReadModel> tasks;
 
     public GroupOfTasksReadModel(final GroupOfTasks source){
+        this.id = source.getId();
         this.description = source.getDescription();
         source.getTasks().stream()
                 .map(Task::getDeadline)
@@ -34,4 +36,8 @@ public class GroupOfTasksReadModel {
     public Set<TaskReadModel> getTasks() { return tasks; }
 
     public void setTasks(Set<TaskReadModel> tasks) { this.tasks = tasks; }
+
+    public int getId() { return id; }
+
+    public void setId(final int id){ this.id = id; }
 }

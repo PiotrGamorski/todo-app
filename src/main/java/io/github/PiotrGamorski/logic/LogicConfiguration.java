@@ -26,4 +26,9 @@ class LogicConfiguration {
             ){
         return new GroupOfTasksService(repository, taskRepository);
     }
+
+    @Bean
+    TaskService taskService(final TaskRepository taskRepository){
+        return new TaskService(taskRepository);
+    }
 }

@@ -1,5 +1,7 @@
 package io.github.PiotrGamorski.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
@@ -16,6 +18,7 @@ public class Task {
     private LocalDateTime deadline;
     @Embedded
     private final Audit audit = new Audit();
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "TASK_GROUP_ID")
     private GroupOfTasks group;

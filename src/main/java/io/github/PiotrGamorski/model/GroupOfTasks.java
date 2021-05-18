@@ -1,5 +1,7 @@
 package io.github.PiotrGamorski.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Set;
@@ -13,6 +15,7 @@ public class GroupOfTasks {
     @NotBlank(message = "Task_group's description must not be empty")
     private String description;
     private boolean done;
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "group")
     private Set<Task> tasks;
     @ManyToOne

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -76,6 +77,16 @@ public class TestConfiguration {
                 return tasks.values().stream()
                         .filter(Task::isDone)
                         .collect(Collectors.toList());
+            }
+
+            @Override
+            public List<Task> findAllByGroup_Id(Integer groupId) {
+                return List.of();
+            }
+
+            @Override
+            public List<Task> findAllUndoneByDeadline(LocalDate deadline) {
+                return List.of();
             }
         };
     }

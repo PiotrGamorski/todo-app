@@ -31,7 +31,7 @@ public class GroupOfTasksService {
 
     public void toggleDonePropInGroup(int groupId){
         if(taskRepository.existsByDoneIsFalseAndGroupId(groupId)){
-            throw new IllegalStateException("Group has undone tasks. Done all the tasks first.");
+            throw new IllegalStateException("Group has undone tasks. Finish all the tasks first.");
         }
 
         GroupOfTasks result = repository.findById(groupId)
