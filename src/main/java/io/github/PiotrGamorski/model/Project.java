@@ -29,9 +29,9 @@ public class Project {
 
     Set<GroupOfTasks> getTaskGroups() { return taskGroups; }
 
-    void setTaskGroups(Set<GroupOfTasks> taskGroups) { this.taskGroups = taskGroups; }
+    public void setTaskGroups(Set<GroupOfTasks> taskGroups) { this.taskGroups = taskGroups; }
 
     public Set<ProjectStep> getProjectSteps() { return projectSteps; }
 
-    void setProjectSteps(Set<ProjectStep> projectSteps) { this.projectSteps = projectSteps; }
+    public void setProjectSteps(Set<ProjectStep> projectSteps) { this.projectSteps = projectSteps; }
 }

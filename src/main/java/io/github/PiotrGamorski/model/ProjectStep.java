@@ -31,7 +31,7 @@ public class ProjectStep {
 
     public void setDaysToDeadline(int daysToDeadline) { this.daysToDeadline = daysToDeadline; }
 
-    Project getProject() { return project; }
+    public Project getProject() { return project; }
 
-    void setProject(Project project) { this.project = project; }
+    public void setProject(Project project) { this.project = project; }
 }

@@ -24,6 +24,13 @@ public class GroupOfTasks {
 
     public GroupOfTasks() {}
 
+    public GroupOfTasks(Project project){
+        super();
+        if(project != null){
+            this.project = project;
+        }
+    }
+
     public int getId() { return id; }
 
     void setId(int id) { this.id = id; }

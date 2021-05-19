@@ -1,6 +1,7 @@
 package io.github.PiotrGamorski.model.projection;
 
 import io.github.PiotrGamorski.model.GroupOfTasks;
+import io.github.PiotrGamorski.model.Project;
 
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -17,8 +18,8 @@ public class GroupOfTasksWriteModel {
 
     public void setTasks(Set<TaskWriteModel> tasks) { this.tasks = tasks; }
 
-    public GroupOfTasks toGroup(){
-        GroupOfTasks result = new GroupOfTasks();
+    public GroupOfTasks toGroup(final Project project){
+        GroupOfTasks result = new GroupOfTasks(project);
         result.setDescription(this.description);
         result.setTasks(
                 tasks.stream()

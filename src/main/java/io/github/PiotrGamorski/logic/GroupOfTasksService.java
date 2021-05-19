@@ -2,6 +2,7 @@ package io.github.PiotrGamorski.logic;
 
 import io.github.PiotrGamorski.model.GroupOfTasks;
 import io.github.PiotrGamorski.model.GroupOfTasksRepository;
+import io.github.PiotrGamorski.model.Project;
 import io.github.PiotrGamorski.model.TaskRepository;
 import io.github.PiotrGamorski.model.projection.GroupOfTasksReadModel;
 import io.github.PiotrGamorski.model.projection.GroupOfTasksWriteModel;
@@ -18,9 +19,13 @@ public class GroupOfTasksService {
         this.taskRepository = taskRepository;
     }
 
-    public GroupOfTasksReadModel createGroup(GroupOfTasksWriteModel source){
-        GroupOfTasks result = repository.save(source.toGroup());
-        return new GroupOfTasksReadModel(result);
+    public GroupOfTasksReadModel createGroup(final GroupOfTasksWriteModel source){
+        return createGroup(source, null);
+    }
+
+    public GroupOfTasksReadModel createGroup(final GroupOfTasksWriteModel source, final Project project) {
+        GroupOfTasks result = repository.save(source.toGroup(project));
+        return  new GroupOfTasksReadModel(result);
     }
 
     public List<GroupOfTasksReadModel> readAll(){

@@ -6,6 +6,7 @@ import io.github.PiotrGamorski.model.Project;
 import io.github.PiotrGamorski.model.ProjectRepository;
 import io.github.PiotrGamorski.model.projection.GroupOfTasksReadModel;
 import io.github.PiotrGamorski.model.projection.GroupOfTasksWriteModel;
+import io.github.PiotrGamorski.model.projection.ProjectWriteModel;
 import io.github.PiotrGamorski.model.projection.TaskWriteModel;
 
 import java.time.LocalDateTime;
@@ -29,8 +30,8 @@ public class ProjectService {
         return repository.findAll();
     }
 
-    public Project save(Project toSave){
-        return repository.save(toSave);
+    public Project save(ProjectWriteModel toSave){
+        return repository.save(toSave.toProject());
     }
 
     public GroupOfTasksReadModel createGroup(LocalDateTime deadline, int projectId){
@@ -52,7 +53,7 @@ public class ProjectService {
                             }
                             ).collect(Collectors.toSet())
                     );
-                    return groupOfTasksService.createGroup(targetGroup);
+                    return groupOfTasksService.createGroup(targetGroup, project);
                 }).orElseThrow(()-> new IllegalArgumentException("Project with given id not found"));
     }
 }
