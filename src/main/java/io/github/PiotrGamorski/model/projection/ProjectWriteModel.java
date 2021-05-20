@@ -5,6 +5,7 @@ import io.github.PiotrGamorski.model.ProjectStep;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -12,12 +13,16 @@ public class ProjectWriteModel {
     @NotBlank(message = "Project's description must not be empty")
     private String description;
     @Valid
-    private List<ProjectStep> steps;
+    private List<ProjectStep> steps = new ArrayList<>();
+
+    public ProjectWriteModel(){
+        steps.add(new ProjectStep());
+    }
 
     public Project toProject(){
         Project result = new Project();
         result.setDescription(this.description);
-        this.steps.forEach(step -> step.setProject(result));
+        this.steps.forEach(projectStep -> projectStep.setProject(result));
         result.setProjectSteps(new HashSet<>(this.steps));
         return result;
     }

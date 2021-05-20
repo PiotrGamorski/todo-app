@@ -25,7 +25,6 @@ public class GroupOfTasks {
     public GroupOfTasks() {}
 
     public GroupOfTasks(Project project){
-        super();
         if(project != null){
             this.project = project;
         }

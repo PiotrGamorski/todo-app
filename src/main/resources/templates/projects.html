@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -10,9 +10,38 @@
 
 <body>
     <main>
-        <fieldset>
-            <legend>New project</legend>
-        </fieldset>
+        <div>
+            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+            <h1 th:if="${message != null}" th:text=${message}></h1>
+        </div>
+        <dl th:each="project : ${projects}">
+
+        </dl>
+        <!--/*@thymesVar id="project" type="io.github.PiotrGamorski.model.projection.ProjectWriteModel"*/-->
+        <form action="#" method="POST" th:action="@{/projects}" th:object="${ProjectWriteModel}">
+            <fieldset>
+                <legend>New project</legend>
+                <label>Description
+                    <input type="text" th:field="*{description}" />
+                </label>
+                <fieldset th:each="step,stepStat : *{steps}">
+                    <legend th:text="|Step ${stepStat.index + 1}|"></legend>
+                    <label>Description
+                        <input type="text" th:field="*{steps[__${stepStat.index}__].description}" />
+                    </label>
+                    <label> Days to deadline
+                        <input type="number" th:field="*{steps[__${stepStat.index}__].daysToDeadline}" />
+                    </label>
+                </fieldset>
+                <div>
+                    <button type="submit" name="addStep">+</button>
+                </div>
+            </fieldset>
+            <p>
+                <button type="submit">Add</button>
+                <button type="reset">Clear</button>
+            </p>
+        </form>
     </main>
 </body>
 

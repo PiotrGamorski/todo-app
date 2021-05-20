@@ -2,6 +2,7 @@ package io.github.PiotrGamorski.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "project_steps")
@@ -11,7 +12,7 @@ public class ProjectStep {
     private int id;
     @NotBlank(message = "Project step's description must not be empty")
     private String description;
-    @NotBlank
+    @NotNull
     private int daysToDeadline;
     @ManyToOne
     @JoinColumn(name = "PROJECT_ID")
