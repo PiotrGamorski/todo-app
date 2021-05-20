@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App: projects</title>
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/styles/projectsView.css}">
+</head>
+
+<body>
+    <main>
+        <div>
+            <!--/*@thymesVar id="message" type="java.lang.String"*/-->
+            <h1 th:if="${message != null}" th:text=${message}></h1>
+        </div>
+        <!--/*@thymesVar id="projects" type="java.util.List<io.github.PiotrGamorski.model.Project>"*/-->
+        <dl th:each="project : ${Projects}" class="Bd P(10px)">
+            <dt th:text="${project.description}">...</dt>
+            <dd>
+                <ul class="P(0)">
+                    <li th:each="step : ${project.projectSteps}"
+                        th:text="|${step.description} (${step.daysToDeadline}) days|"></li>
+                </ul>
+            </dd>
+        </dl>
+        <fieldset>
+            <!--/*@thymesVar id="projectWriteModel" type="io.github.PiotrGamorski.model.projection.ProjectWriteModel"*/-->
+            <form action="#" method="POST" th:action="@{/projects}" th:object="${ProjectWriteModel}">
+                <p class="C(red)" th:if="${#fields.hasAnyErrors()}" th:errors="*{all}">Incorrect data</p>
+                <legend>New project</legend>
+                <label>Description
+                    <input type="text" th:field="*{description}" th:errorclass="'Bdc(red)'" />
+                </label>
+                <fieldset th:each="step,stepStat : *{steps}">
+                    <legend th:text="|Step ${stepStat.index + 1}|"></legend>
+                    <label>Description
+                        <input type="text" th:field="*{steps[__${stepStat.index}__].description}"
+                            th:errorclass="'Bdc(red)'" />
+                    </label>
+                    <label> Days to deadline
+                        <input type="number" th:field="*{steps[__${stepStat.index}__].daysToDeadline}"
+                            th:errorclass="'Bdc(red)'" />
+                    </label>
+                </fieldset>
+                <div>
+                    <button type="submit" name="addStep">+</button>
+                </div>
+                <p>
+                    <button type="submit">Add</button>
+                    <button type="reset">Clear</button>
+                </p>
+            </form>
+        </fieldset>
+    </main>
+</body>
+
+</html>

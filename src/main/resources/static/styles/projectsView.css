@@ -1,0 +1,19 @@
+.Bd {
+    border: solid 1px black;
+}
+
+.P\(0\) {
+    padding: 0;
+}
+
+.P\(10px\){
+    padding: 10px;
+}
+
+.Bdc\(red\){
+    border-color: red !important;
+}
+
+.C\(red\){
+    color: red;
+}
