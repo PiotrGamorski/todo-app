@@ -5,15 +5,14 @@ import io.github.PiotrGamorski.model.Project;
 import io.github.PiotrGamorski.model.ProjectStep;
 import io.github.PiotrGamorski.model.projection.ProjectWriteModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -50,6 +49,21 @@ class ProjectViewController {
     String addProjectStep(@ModelAttribute("ProjectWriteModel") ProjectWriteModel currentProject){
         currentProject.getSteps().add(new ProjectStep());
         return this.view;
+    }
+
+    @PostMapping("/{id}")
+    String createGroup(@ModelAttribute("ProjectWriteModel") ProjectWriteModel currentProject,
+                       Model model,
+                       @PathVariable int id,
+                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime deadline
+    ){
+         try {
+             projectService.createGroup(deadline, id);
+             model.addAttribute("message", "The group has been added.");
+         } catch (IllegalStateException | IllegalArgumentException e){
+             model.addAttribute("message", "An error occurred when tried to create group.");
+         }
+         return this.view;
     }
 
     @ModelAttribute("Projects")

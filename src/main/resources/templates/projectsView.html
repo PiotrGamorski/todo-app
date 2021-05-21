@@ -23,6 +23,13 @@
                     <li th:each="step : ${project.projectSteps}"
                         th:text="|${step.description} (${step.daysToDeadline}) days|"></li>
                 </ul>
+                <form action="#" method="POST" th:action="@{/projects/{projectId}(projectId=${project.id})}">
+                    <label>Deadline
+                        <input name="deadline" type="datetime-local"
+                            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" />
+                    </label>
+                    <button type="submit">Add new tasks>></button>
+                </form>
             </dd>
         </dl>
         <fieldset>
