@@ -4,6 +4,7 @@ import io.github.PiotrGamorski.model.Task;
 import io.github.PiotrGamorski.model.GroupOfTasks;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,6 +19,7 @@ public class GroupOfTasksReadModel {
         this.description = source.getDescription();
         source.getTasks().stream()
                 .map(Task::getDeadline)
+                .filter(Objects::nonNull)
                 .max(LocalDateTime::compareTo)
                 .ifPresent(this::setDeadline);
         this.tasks = source.getTasks().stream()
