@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo App: groups</title>
+    <link rel="stylesheet" href="https://igoradamenko.github.io/awsm.css/css/awsm.min.css">
+</head>
+
+<body>
+    <main>
+        <fieldset>
+            <form>
+                <label>Deadline
+                    <input type="text" name="description" />
+                </label>
+                <label>Deadline
+                    <input type="datetime-local" name="deadline"
+                        pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}" />
+                </label>
+                <button type="submit">Add!</button>
+            </form>
+        </fieldset>
+    </main>
+    <!-- The following script refers to "main" only in this html. -->
+    <script src="./scriptsJS/tasks.js"></script>
+</body>
+
+</html>

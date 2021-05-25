@@ -59,6 +59,7 @@ class ProjectViewController {
     ){
          try {
              projectService.createGroup(deadline, id);
+             model.addAttribute("Projects", getProjects());
              model.addAttribute("message", "The group has been added.");
          } catch (IllegalStateException | IllegalArgumentException e){
              model.addAttribute("message", "An error occurred when tried to create group.");
@@ -67,7 +68,7 @@ class ProjectViewController {
     }
 
     @ModelAttribute("Projects")
-    List<Project> getProjects(Project project){
+    List<Project> getProjects(){
          return projectService.readAll();
      }
 }
