@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 
+// This class represents pure VIEW controller
 @Controller
 @RequestMapping("/projects")
 class ProjectViewController {
@@ -67,6 +68,7 @@ class ProjectViewController {
          return this.view;
     }
 
+    // Each model in enhanced with attribute "Projects". The attribute is bind with return value of the method.
     @ModelAttribute("Projects")
     List<Project> getProjects(){
          return projectService.readAll();

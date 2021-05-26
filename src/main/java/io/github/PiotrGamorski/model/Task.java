@@ -12,7 +12,7 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NotBlank(message = "Task's description must not be empty")
+    @NotBlank(message = "Task's description cannot be empty")
     private String description;
     private boolean done;
     private LocalDateTime deadline;

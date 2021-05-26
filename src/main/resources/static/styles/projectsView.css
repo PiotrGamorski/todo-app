@@ -2,6 +2,10 @@
     border: solid 1px black;
 }
 
+.M\(0\) {
+    margin: 0;
+}
+
 .P\(0\) {
     padding: 0;
 }
