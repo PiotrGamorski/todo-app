@@ -4,6 +4,7 @@ import io.github.PiotrGamorski.logic.ProjectService;
 import io.github.PiotrGamorski.model.Project;
 import io.github.PiotrGamorski.model.ProjectStep;
 import io.github.PiotrGamorski.model.projection.ProjectWriteModel;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -52,6 +53,7 @@ class ProjectViewController {
         return this.view;
     }
 
+    @Timed(value = "project.create.group", histogram = true, percentiles = {0.5, 0.95, 0.99})
     @PostMapping("/{id}")
     String createGroup(@ModelAttribute("ProjectWriteModel") ProjectWriteModel currentProject,
                        Model model,
