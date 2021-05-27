@@ -9,6 +9,7 @@ import io.github.PiotrGamorski.model.projection.TaskWriteModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ import java.util.List;
 
 // @RestController was exchanged with @Controller in order to return both JSON and THYMELEAF TEMPLATES/STRING.
 @Controller
+@IllegalExceptionProcessing
 @RequestMapping("/groups")
 class GroupOfTasksController {
     private final String view = "groupsView";
@@ -90,7 +92,12 @@ class GroupOfTasksController {
     @GetMapping("/{id}")
     ResponseEntity<List<Task>> readAllTasksFromGroup(@PathVariable int id){
         logger.warn("Exposing all the tasks");
-        return ResponseEntity.ok(taskRepository.findAllByGroup_Id(id));
+        List<Task> result = taskRepository.findAllByGroup_Id(id);
+        if (result.isEmpty()){
+            return ResponseEntity.notFound().build();
+        } else {
+            return new ResponseEntity<>(result, HttpStatus.valueOf(200));
+        }
     }
 
     @Transactional
@@ -99,15 +106,5 @@ class GroupOfTasksController {
     public ResponseEntity<?> toggleGroup(@PathVariable int id){
         groupOfTasksService.toggleDonePropInGroup(id);
         return ResponseEntity.noContent().build();
-    }
-
-    @ExceptionHandler(IllegalArgumentException.class)
-    ResponseEntity<String> handleIllegalArgument(IllegalArgumentException e){
-        return ResponseEntity.notFound().build();
-    }
-
-    @ExceptionHandler(IllegalStateException.class)
-    ResponseEntity<String> handleIllegalStateException(IllegalStateException e){
-        return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
