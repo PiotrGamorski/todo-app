@@ -9,4 +9,5 @@ public interface GroupOfTasksRepository {
     GroupOfTasks save(GroupOfTasks entity);
     boolean existsByDoneIsFalseAndProject_Id(Integer projectId);
     boolean existsByDescription(String description);
+    List<GroupOfTasks> findAllByDescription(String description);
 }

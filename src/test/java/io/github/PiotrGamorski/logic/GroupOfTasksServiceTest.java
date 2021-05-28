@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -138,6 +139,13 @@ class GroupOfTasksServiceTest {
         public boolean existsByDescription(String description) {
             return map.values().stream()
                     .anyMatch(groupOfTasks -> groupOfTasks.getDescription().equals(description));
+        }
+
+        @Override
+        public List<GroupOfTasks> findAllByDescription(String description) {
+            return map.values().stream()
+                    .filter(groupOfTasks -> groupOfTasks.getDescription().equals(description))
+                    .collect(Collectors.toList());
         }
     }
 }

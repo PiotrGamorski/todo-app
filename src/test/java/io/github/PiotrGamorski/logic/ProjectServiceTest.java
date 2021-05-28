@@ -190,5 +190,12 @@ class ProjectServiceTest {
             return map.values().stream()
                     .anyMatch(groupOfTasks -> groupOfTasks.getDescription().equals(description));
         }
+
+        @Override
+        public List<GroupOfTasks> findAllByDescription(String description) {
+            return map.values().stream()
+                    .filter(groupOfTasks -> groupOfTasks.getDescription().equals(description))
+                    .collect(Collectors.toList());
+        }
     }
 }
