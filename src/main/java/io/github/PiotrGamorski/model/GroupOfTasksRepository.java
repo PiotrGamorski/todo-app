@@ -8,4 +8,5 @@ public interface GroupOfTasksRepository {
     Optional<GroupOfTasks> findById(Integer id);
     GroupOfTasks save(GroupOfTasks entity);
     boolean existsByDoneIsFalseAndProject_Id(Integer projectId);
+    boolean existsByDescription(String description);
 }
