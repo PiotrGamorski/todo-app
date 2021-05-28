@@ -34,7 +34,7 @@ class TaskControllerUnitTest {
         mockInMemoryTaskRepository.save(targetTask);
         int id = targetTask.getId();
         // system under test
-        var toTest = new TaskController(mockInMemoryTaskRepository, mockTaskService);
+        var toTest = new TaskController(mockInMemoryTaskRepository, mockTaskService, null);
         // when
         var result = toTest.updateTask(id, new Task("bar", LocalDateTime.now()));
         // then

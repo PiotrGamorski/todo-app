@@ -1,6 +1,7 @@
 package io.github.PiotrGamorski.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.github.PiotrGamorski.event.TaskEvent;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -47,7 +48,10 @@ public class Task {
 
     public boolean isDone() { return done; }
 
-    public void setDone(boolean done) { this.done = done; }
+    public TaskEvent toggle() {
+        this.done = !this.done;
+        return TaskEvent.changed(this);
+    }
 
     public LocalDateTime getDeadline() { return deadline; }
 
