@@ -43,8 +43,6 @@ public class ReportController {
             this.done = task.isDone();
             this.changesCounter = events.size();
         }
-
-
     }
 
     @GetMapping("/deadline/{id}")
@@ -58,7 +56,6 @@ public class ReportController {
 
     @GetMapping("/deadline")
     List<TaskDoneBeforeDeadline> readTasksDoneBeforeDeadline(){
-
         var eventsIds = persistedTaskEventRepository.findAll().stream()
                 .map(event -> event.taskId)
                 .distinct()
@@ -66,6 +63,8 @@ public class ReportController {
 
         var tasks = taskRepository.findAll().stream()
                 .filter(task -> eventsIds.contains(task.getId()))
+                .filter(task -> task.getDeadline() != null)
+                .filter(Task::isDone)
                 .collect(Collectors.toList());
 
         return tasks.stream().map(task -> new TaskDoneBeforeDeadline(task, persistedTaskEventRepository.findByTaskId(task.getId())))
