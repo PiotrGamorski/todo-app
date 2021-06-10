@@ -3,6 +3,7 @@ package io.github.PiotrGamorski.controller;
 import io.github.PiotrGamorski.TaskConfigurationProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,7 @@ public class InfoController {
         return dataSource.getUrl();
     }
 
+    @Secured("ROLE_ADMIN")
     @GetMapping("/prop")
     boolean myProp(){
         return myProp.getTemplate().isAllowMultipleTasksFromTemplate();

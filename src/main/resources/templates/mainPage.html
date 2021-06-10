@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -14,7 +14,7 @@
         <p>Doing all the things!</p>
         <nav>
             <ul>
-                <li>
+                <li sec:authorize="hasRole('ADMIN')">
                     <a href="/projects">Projects</a>
                 </li>
                 <li>

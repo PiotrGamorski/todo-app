@@ -7,17 +7,21 @@ import io.github.PiotrGamorski.model.projection.ProjectWriteModel;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.List;
 
 // This class represents pure VIEW controller
 @Controller
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 @RequestMapping("/projects")
 class ProjectViewController {
      final String view = "projectsView";
@@ -29,9 +33,14 @@ class ProjectViewController {
      }
 
     @GetMapping
-    String showProjects(Model model){
-        model.addAttribute("ProjectWriteModel", new ProjectWriteModel());
-        return this.view;
+    String showProjects(Model model, Authentication auth, Principal p){
+//         if (auth.getAuthorities().stream()
+//                 .anyMatch(a->a.getAuthority().equals("ROLE_ADMIN"))
+//         ){
+             model.addAttribute("ProjectWriteModel", new ProjectWriteModel());
+             return this.view;
+//         }
+//        return "mainPage";
     }
 
     @PostMapping
