@@ -11,6 +11,6 @@ class SingleSignOnController {
     @GetMapping(value = "/logout")
     String logout(HttpServletRequest request) throws ServletException {
         request.logout();
-        return "mainPage";
+        return "redirect:/";
     }
 }
